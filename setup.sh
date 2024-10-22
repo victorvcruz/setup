@@ -134,7 +134,9 @@ sudo DEBIAN_FRONTEND=noninteractive apt install solaar -y
 
 # Install Python and Pip
 echo "Installing Python and Pip..."
-sudo apt install python3.12 python3-pip -y
+sudo apt install python3.12 -y
+sudo apt install python3-pip -y
+
 
 # Install Pipx
 echo "Installing Pipx..."
