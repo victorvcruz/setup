@@ -4,9 +4,10 @@ set -e
 
 # Update the system
 echo "Updating the system..."
-sudo apt install software-properties-common -y 
 sudo apt-get update 
 sudo apt-get upgrade -y 
+sudo apt install software-properties-common -y 
+sudo apt-get update 
 
 # Install Chrome
 echo "Installing Google Chrome..."
