@@ -146,13 +146,9 @@ echo "Installing Pipx..."
 sudo apt install pipx -y
 pipx ensurepath
 
-# Automatically open a new terminal to use pipx
-gnome-terminal & 
-
 # Install Poetry and Pytest
-echo "Installing Poetry and Pytest..."
-pipx install poetry
-pipx install pytest
+#pipx install poetry
+#pipx install pytest
 
 # Install and setup ZSH
 if ! command -v zsh &> /dev/null; then
