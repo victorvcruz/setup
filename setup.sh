@@ -30,10 +30,6 @@ sudo apt install curl -y
 echo "Installing unzip..."
 sudo apt install unzip -y
 
-# Install Snap
-echo "Installing snap..."
-sudo apt install snapd -y
-
 # Install Docker
 if ! command -v docker &> /dev/null; then
     echo "Docker is not installed. Installing..."
@@ -119,9 +115,6 @@ if ! command -v kubectl &> /dev/null; then
 else
     echo "kubectl is already installed."
 fi
-
-# Install Slack
-sudo snap install slack
 
 # Install Barrier
 echo "Installing Barrier..."
