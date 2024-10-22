@@ -8,9 +8,14 @@ sudo apt-get update && sudo apt-get upgrade -y
 
 # Install Chrome
 echo "Installing Google Chrome..."
-wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-sudo dpkg -i google-chrome-stable_current_amd64.deb || sudo apt-get install -f -y
-rm google-chrome-stable_current_amd64.deb
+if ! dpkg -l | grep -q google-chrome-stable; then
+    echo "Google Chrome is not installed. Installing..."
+    wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+    sudo dpkg -i google-chrome-stable_current_amd64.deb || sudo apt-get install -f -y
+    rm google-chrome-stable_current_amd64.deb
+else
+    echo "Google Chrome is already installed."
+fi
 
 # Install Git
 echo "Installing Git..."
