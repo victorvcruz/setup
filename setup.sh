@@ -26,9 +26,13 @@ git config --global --add --bool push.autoSetupRemote true
 echo "Installing Curl..."
 sudo apt install curl -y
 
-# Install unzip
+# Install Unzip
 echo "Installing unzip..."
 sudo apt install unzip -y
+
+# Install Snap
+echo "Installing snap..."
+sudo apt install snapd -y
 
 # Install Docker
 if ! command -v docker &> /dev/null; then
