@@ -90,4 +90,41 @@ echo "Installing Poetry and Pytest..."
 pipx install poetry
 pipx install pytest
 
+# Install and setup ZSH
+echo "Install and setup ZSH..."
+sudo apt-get install zsh
+sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+git clone https://github.com/romkatv/powerlevel10k.git $ZSH_CUSTOM/themes/powerlevel10k
+sed -i 's/^ZSH_THEME=.*$/ZSH_THEME="powerlevel10k\/powerlevel10k"/' ~/.zshrc && source ~/.zshrc
+
+# fonts
+mkdir -p "$HOME/.local/share/fonts"
+FONT_URLS=(
+    "https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Regular.ttf"
+    "https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold.ttf"
+    "https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Italic.ttf"
+    "https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold%20Italic.ttf"
+)
+for url in "${FONT_URLS[@]}"; do
+    FONT_FILE=$(basename "$url")
+    if [ ! -f "$FONT_DIR/$FONT_FILE" ]; then
+        echo "Downloading $FONT_FILE..."
+        curl -fLo "$FONT_DIR/$FONT_FILE" "$url"
+    else
+        echo "$FONT_FILE already exists."
+    fi
+done
+fc-cache -f -v
+
+# Configure gnome terminal
+echo "Configure gnome terminal..."
+PROFILE=$(gsettings get org.gnome.Terminal.ProfilesList default | tr -d "'") &&
+gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:$PROFILE/ font 'MesloLGS NF Regular 12'
+
+# plugins
+"Downloading plugin zsh-autosuggestions..."
+git clone https://github.com/zsh-users/zsh-autosuggestions.git $ZSH_CUSTOM/plugins/zsh-autosuggestions
+sed -i 's/^plugins=(.*)$/plugins=(git zsh-autosuggestions)/' ~/.zshrc && source ~/.zshrc
+
+#Setup complete!
 echo "Setup complete! Please restart your session to apply the changes."
