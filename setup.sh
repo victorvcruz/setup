@@ -121,8 +121,14 @@ else
 fi
 
 # Install Slack
-echo "Installing Slack..."
-sudo snap install slack
+if ! dpkg -l | grep -q slack; then
+    echo "Slack is not installed. Installing..."
+    curl -L -o slack.deb "https://slack.com/downloads/instructions/linux?ddl=1&build=deb"
+    sudo dpkg -i slack.deb
+    rm slack.deb
+else
+    echo "Slack is already installed."
+fi
 
 # Install Barrier
 echo "Installing Barrier..."
