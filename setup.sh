@@ -3,37 +3,48 @@
 set -e
 
 # Update the system
-echo "Updating the system..."
+echo "===================================="
+echo "Step 1: Updating the system..."
 sudo apt-get update 
 sudo apt-get upgrade -y 
-sudo apt install software-properties-common -y 
-sudo apt-get update 
+echo "System updated successfully!"
+echo "===================================="
 
 # Install Chrome
-echo "Installing Google Chrome..."
+echo "Step 2: Installing Google Chrome..."
 if ! dpkg -l | grep -q google-chrome-stable; then
     echo "Google Chrome is not installed. Installing..."
     wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
     sudo dpkg -i google-chrome-stable_current_amd64.deb || sudo apt-get install -f -y
     rm google-chrome-stable_current_amd64.deb
+    echo "Google Chrome installed successfully!"
 else
     echo "Google Chrome is already installed."
 fi
+echo "===================================="
 
 # Install Git
+echo "Step 3: Installing Git..."
 echo "Installing Git..."
 sudo apt install git-all -y
 git config --global --add --bool push.autoSetupRemote true
+echo "Git installed successfully!"
+echo "===================================="
 
 # Install Curl
-echo "Installing Curl..."
+echo "Step 4: Installing Curl..."
 sudo apt install curl -y
+echo "Curl installed successfully!"
+echo "===================================="
 
 # Install Unzip
-echo "Installing unzip..."
+echo "Step 5: Installing unzip..."
 sudo apt install unzip -y
+echo "Unzip installed successfully!"
+echo "===================================="
 
 # Install Docker
+echo "Step 6: Installing Docker..."
 if ! command -v docker &> /dev/null; then
     echo "Docker is not installed. Installing..."
 
@@ -65,8 +76,10 @@ if ! command -v docker &> /dev/null; then
 else
     echo "Docker is already installed."
 fi
+echo "===================================="
 
 # Install VS Code
+echo "Step 7: Installing Visual Studio Code..."
 if ! command -v code &> /dev/null; then
     echo "Visual Studio Code is not installed. Installing..."
 
@@ -89,8 +102,10 @@ if ! command -v code &> /dev/null; then
 else
     echo "Visual Studio Code is already installed."
 fi
+echo "===================================="
 
 # Install AWS CLI
+echo "Step 8: Installing AWS CLI..."
 if ! command -v aws &> /dev/null; then
     echo "AWS CLI is not installed. Installing..."
 
@@ -104,8 +119,10 @@ if ! command -v aws &> /dev/null; then
 else
     echo "AWS CLI is already installed."
 fi
+echo "===================================="
 
 # Install kubectl
+echo "Step 9: Installing kubectl..."
 if ! command -v kubectl &> /dev/null; then
     echo "kubectl is not installed. Installing..."
 
@@ -118,45 +135,60 @@ if ! command -v kubectl &> /dev/null; then
 else
     echo "kubectl is already installed."
 fi
+echo "===================================="
 
 # Install Barrier
-echo "Installing Barrier..."
+echo "Step 10: Installing Barrier..."
 sudo apt install barrier -y
+echo "Barrier installed successfully!"
+echo "===================================="
 
 # Install Node.js and npm
-echo "Installing Node.js and npm..."
+echo "Step 11: Installing Node.js and npm..."
 sudo apt install nodejs npm -y
+echo "Node.js and npm installed successfully!"
+echo "===================================="
 
 # Install AWS CDK
-echo "Installing AWS CDK..."
+echo "Step 12: Installing AWS CDK..."
 if ! command -v cdk &> /dev/null; then
     echo "AWS CDK is not installed. Installing..."
     sudo npm install -g aws-cdk
+    echo "AWS CDK has been installed."
 else
     echo "AWS CDK is already installed."
 fi
+echo "===================================="
 
 # Install Solaar
-echo "Installing Solaar..."
+echo "Step 13: Installing Solaar..."
 sudo DEBIAN_FRONTEND=noninteractive apt install solaar -y
+echo "Solaar installed successfully!"
+echo "===================================="
 
 # Install Python and Pip
-echo "Installing Python and Pip..."
+echo "Step 14: Installing Python and Pip..."
+sudo apt install software-properties-common -y 
 sudo add-apt-repository -y ppa:deadsnakes/ppa
 sudo apt update
 sudo apt install python3.12 -y
 sudo apt install python3-pip -y
+echo "Python and Pip installed successfully!"
+echo "===================================="
 
 # Install Pipx
-echo "Installing Pipx..."
+echo "Step 15: Installing Pipx..."
 sudo apt install pipx -y
 pipx ensurepath
+echo "Pipx installed successfully!"
+echo "===================================="
 
 # Install Poetry and Pytest
-#pipx install poetry
-#pipx install pytest
+# pipx install poetry
+# pipx install pytest
 
 # Install and setup ZSH
+echo "Step 16: Installing and setting up ZSH..."
 if ! command -v zsh &> /dev/null; then
     echo "Zsh is not installed. Installing..."
     sudo apt-get install zsh -y
@@ -190,17 +222,18 @@ if ! command -v zsh &> /dev/null; then
     fc-cache -f -v
     
     # Configure gnome terminal
-    echo "Configure gnome terminal..."
+    echo "Configuring Gnome Terminal..."
     PROFILE=$(gsettings get org.gnome.Terminal.ProfilesList default | tr -d "'") &&
     gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:$PROFILE/ font 'MesloLGS NF Regular 12'
     
     # plugins
-    "Downloading plugin zsh-autosuggestions..."
+    echo "Downloading plugin zsh-autosuggestions..."
     git clone https://github.com/zsh-users/zsh-autosuggestions.git $ZSH_CUSTOM/plugins/zsh-autosuggestions
     sed -i 's/^plugins=(.*)$/plugins=(git zsh-autosuggestions)/' ~/.zshrc && source ~/.zshrc
 else
     echo "Zsh is already installed."
 fi
+echo "===================================="
 
-#Setup complete!
+# Setup complete!
 echo "Setup complete! Please restart your session to apply the changes."
