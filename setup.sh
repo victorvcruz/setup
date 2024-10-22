@@ -4,7 +4,9 @@ set -e
 
 # Update the system
 echo "Updating the system..."
-sudo apt-get update && sudo apt-get upgrade -y
+sudo apt install software-properties-common -y 
+sudo apt-get update 
+sudo apt-get upgrade -y 
 
 # Install Chrome
 echo "Installing Google Chrome..."
@@ -126,7 +128,12 @@ sudo apt install nodejs npm -y
 
 # Install AWS CDK
 echo "Installing AWS CDK..."
-sudo npm install -g aws-cdk
+if ! command -v cdk &> /dev/null; then
+    echo "AWS CDK is not installed. Installing..."
+    sudo npm install -g aws-cdk
+else
+    echo "AWS CDK is already installed."
+fi
 
 # Install Solaar
 echo "Installing Solaar..."
@@ -134,12 +141,10 @@ sudo DEBIAN_FRONTEND=noninteractive apt install solaar -y
 
 # Install Python and Pip
 echo "Installing Python and Pip..."
-sudo apt install software-properties-common -y
 sudo add-apt-repository -y ppa:deadsnakes/ppa
 sudo apt update
 sudo apt install python3.12 -y
 sudo apt install python3-pip -y
-
 
 # Install Pipx
 echo "Installing Pipx..."
