@@ -26,6 +26,10 @@ git config --global --add --bool push.autoSetupRemote true
 echo "Installing Curl..."
 sudo apt install curl -y
 
+# Install unzip
+echo "Installing unzip..."
+sudo apt install unzip -y
+
 # Install Docker
 if ! command -v docker &> /dev/null; then
     echo "Docker is not installed. Installing..."
