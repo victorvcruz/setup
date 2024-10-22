@@ -130,7 +130,7 @@ sudo npm install -g aws-cdk
 
 # Install Solaar
 echo "Installing Solaar..."
-sudo apt install solaar -y
+sudo DEBIAN_FRONTEND=noninteractive apt install solaar -y
 
 # Install Python and Pip
 echo "Installing Python and Pip..."
